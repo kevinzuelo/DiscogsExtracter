@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "disconnect": "^1.2.2"
+    "disconnect": "^1.2.2",
+    "pg": "^8.7.3",
+    "yesql": "^5.0.0"
   }
 }

@@ -1,0 +1,123 @@
+body {
+    background-color: #222;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 
+        "header header header"
+        "list list list"
+        ". nav ."
+        "footer footer footer";
+}
+
+h1 {
+    font-family: 'Rubik', sans-serif;
+    color: white;
+    font-weight: 100;
+    display: flex;
+    align-items: center;
+    padding: 1em;
+    flex-basis: 50%;
+    
+}
+
+.album {
+    width: 15em;
+    height: 15em;
+    background-color: #895E9D;
+    margin: 2em;
+    flex: none;
+    transition: transform .2s;
+        
+}
+
+.album:hover {
+    transform: scale(1.2);
+    overflow: auto;
+}
+
+
+
+#player {
+    color: #895E9D;
+    margin-left: 12px
+}
+
+#page-header {
+    grid-area: header;
+    display: flex;
+    padding: 1em;
+}
+
+#page-header i {
+    color: #111;
+    background-color: #444;
+    padding: .2em;
+    border-radius: 50%;
+    align-self: center;
+
+}
+
+#album-list {
+    grid-area: list;
+    background-color: #444;
+    margin: 1em;
+    border-radius:5px;
+    display: flex;
+    position: relative;
+}
+
+#album-container {
+    display: flex;
+    overflow-x: auto;
+    position: relative;
+
+}
+
+#album-container::-webkit-scrollbar { 
+    width: 0 !important;
+}
+
+
+
+#nav-btns {
+    grid-area: nav;
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+#nav-btns ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    
+}
+
+#nav-btns li {
+    display: flex;
+    justify-content: center;
+    transition: transform .2s;
+}
+
+#nav-btns li:hover {
+    transform: scale(1.2);
+}
+
+
+
+#nav-btns i {
+    color: #895E9D;
+    background-color: #444;
+    padding: .5em;
+    border-radius: 50%;
+
+}
+
+#page-footer {
+    grid-area: footer;
+}
+
+
+
+
+
