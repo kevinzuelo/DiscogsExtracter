@@ -2,8 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { Client } = require('pg');
 const env = require('dotenv').config();
-var request = require('request');
+const request = require('request');
 const querystring = require('node:querystring');
+const { text } = require('body-parser');
 
 const app = express();
 
@@ -34,7 +35,7 @@ app.get('/album/', async (req, res) => {
   const title = await client.query(sqlGetTitle, [id]);
   const artist = await client.query(sqlGetArtist, [id]);
 
-  res.status(200).send(title.rows[0].name + ", " + artist.rows[0].name);
+  res.status(200).send(title.rows[0].name + " " + artist.rows[0].name);
 
 })
 
@@ -47,6 +48,8 @@ app.listen(port, () => {
 const client_id = process.env.CLIENTID;
 const client_secret = process.env.CLIENTSECRET;
 const redirect_uri = 'http://localhost:8080/callback';
+
+let accessToken = '';
 
 var generateRandomString = function (length) {
   var text = '';
@@ -64,7 +67,8 @@ app.get('/login', function (req, res) {
   const client_secret = process.env.CLIENTSECRET;
   const state = generateRandomString(16);
   const stateKey = 'spotify_auth_state';
-  const scope = 'user-read-private user-read-email';
+  const scope = 'user-read-private user-read-email user-follow-read user-read-currently-playing';
+  
 
   res.cookie(stateKey, state)
 
@@ -99,10 +103,29 @@ app.get('/callback', (req, res) => {
   request.post(authOptions, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       const access_token = body.access_token;
-      res.send({
-        'access_token': access_token,
-      });
+      accessToken = access_token;
+
+      const options = {
+
+        method: 'GET',
+        url: 'https://api.spotify.com/v1/search?q=miles%20davis%20porgy%20and%20bess&type=album',
+        headers: {
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
+        }
+      }
+
+      request(options, (error, response, body) => {
+        if(!error){
+          let json = JSON.parse(body);
+          let album = json.albums.items[0];
+          console.log("imgURL : " + album.images[0].url);
+
+        }
+      })
     }
-  })
+  });
 });
+
+// Spotify stuff
 

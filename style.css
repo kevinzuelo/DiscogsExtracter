@@ -4,7 +4,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-areas: 
         "header header header"
-        "list list list"
+        "list list music-player"
         ". nav ."
         "footer footer footer";
 }
@@ -111,6 +111,12 @@ h1 {
     padding: .5em;
     border-radius: 50%;
 
+}
+
+#music-player {
+    grid-area: music-player;
+    background-color: #895E9D;
+    border-radius: 5px;
 }
 
 #page-footer {
